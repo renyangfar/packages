@@ -1,0 +1,16 @@
+[Unit]
+Description=ssh proxy
+After=sshd.service network.service
+Wants=sshd.service
+
+[Service]
+Type=simple
+User=root
+Group=root
+WorkingDirectory=/home
+ExecStart=/usr/bin/ssh -N -D localhost:65530 root@localhost -o ServerAliveInterval=10 -o ServerAliveCountMax=3
+TimeoutSec=3
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
